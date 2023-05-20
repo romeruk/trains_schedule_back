@@ -1,0 +1,31 @@
+{
+  "cSpell.words": [
+    "appspot",
+    "autoload",
+    "errorable",
+    "fastify",
+    "firebaseapp",
+    "formbody",
+    "Harish",
+    "healthcheck",
+    "Matta",
+    "multistream",
+    "Parens",
+    "pino",
+    "querybuilder",
+    "redactable",
+    "rtracer",
+    "serializers",
+    "todos",
+    "traceid",
+    "Xncn",
+    "Zmdz",
+    "Zyjsro"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript"
+  ]
+}
