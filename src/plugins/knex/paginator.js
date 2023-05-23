@@ -1,18 +1,12 @@
 'use strict';
 
 const Knex = require('knex');
-
-const PAGE_SIZE = 10;
-const CURRENT_PAGE = 1;
-
 const EXCLUDED_ATTR_FROM_COUNT = ['order', 'columns', 'limit', 'offset', 'group', 'select'];
 
-function paginate({ pageSize = PAGE_SIZE, currentPage = CURRENT_PAGE, distinctWith } = {}) {
+function paginate({ limit, skip, distinctWith }) {
   // eslint-disable-next-line no-invalid-this
   const countByQuery = this.clone();
-
-  const page = Math.max(currentPage || 1);
-  const offset = (page - 1) * pageSize;
+  const offset = skip ?? 0;
 
   /**
    * Remove statements that will make things bad with count
@@ -30,19 +24,12 @@ function paginate({ pageSize = PAGE_SIZE, currentPage = CURRENT_PAGE, distinctWi
   }
 
   // eslint-disable-next-line no-invalid-this
-  return Promise.all([countByQuery.first(), this.offset(offset).limit(pageSize)]).then(
+  return Promise.all([countByQuery.first(), this.offset(offset).limit(limit)]).then(
     ([counter, result]) => {
       const total = Number(counter.total);
       return {
         data: result,
-        meta: {
-          pagination: {
-            total,
-            page,
-            page_size: pageSize,
-            total_pages: Math.ceil(total / pageSize)
-          }
-        }
+        total
       };
     }
   );

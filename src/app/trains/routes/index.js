@@ -53,7 +53,7 @@ module.exports = async fastify => {
     }),
     fastify.route({
       method: 'GET',
-      url: '/:trainId/stations',
+      url: '/:trainId/schedule',
       schema: getTrainStationsSchema,
       handler: getTrainStations(fastify)
     }),

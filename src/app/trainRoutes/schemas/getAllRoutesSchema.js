@@ -3,45 +3,25 @@
 const { headers, errorSchemas } = require('../../common/schema');
 
 const getAllRoutesResponseSchema = {
-  type: 'object',
-  properties: {
-    data: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          route_id: {
-            type: 'string',
-            format: 'uuid'
-          },
-          route_title: {
-            type: 'string'
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time'
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time'
-          }
-        }
-      }
-    },
-    meta: {
-      type: 'object',
-      properties: {
-        pagination: {
-          type: 'object',
-          properties: {
-            total: { type: 'number' },
-            page: { type: 'number' },
-            page_size: { type: 'number' },
-            total_pages: { type: 'number' }
-          }
-        }
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      route_id: {
+        type: 'string',
+        format: 'uuid'
       },
-      additionalProperties: true
+      route_title: {
+        type: 'string'
+      },
+      created_at: {
+        type: 'string',
+        format: 'date-time'
+      },
+      updated_at: {
+        type: 'string',
+        format: 'date-time'
+      }
     }
   }
 };

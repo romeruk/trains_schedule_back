@@ -8,6 +8,7 @@ const getAllStations = async ({ fastify, paginateData }) => {
   const stations = getAllStations(fastify.knex)({
     paginateData
   });
+
   return stations;
 };
 

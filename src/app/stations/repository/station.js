@@ -37,6 +37,7 @@ function StationRepo(fastify) {
     knex =>
     async ({ paginateData }) => {
       const query = knex('station').select().paginate(paginateData);
+
       const rows = await query;
       return rows;
     };

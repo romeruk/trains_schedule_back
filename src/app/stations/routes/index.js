@@ -41,7 +41,7 @@ module.exports = async fastify => {
       handler: getStation(fastify)
     }),
     fastify.route({
-      method: 'PUT',
+      method: 'PATCH',
       url: '/:stationId',
       schema: updateStationSchema,
       handler: updateStation(fastify)
