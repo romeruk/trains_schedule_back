@@ -4,21 +4,23 @@ const { OK } = require('http-status-codes').StatusCodes;
 const { getAllTrains: getAllTrainsService } = require('../services');
 
 const getAllTrains = fastify => async (request, reply) => {
-  const { pageSize, currentPage } = request.query;
+  const { _end, _start } = request.query;
 
   const paginateData = {};
 
-  if (pageSize) {
-    paginateData['pageSize'] = pageSize;
+  if (_end) {
+    paginateData['limit'] = _end;
   }
 
-  if (currentPage) {
-    paginateData['currentPage'] = currentPage;
+  if (_start) {
+    paginateData['skip'] = _start;
   }
 
-  const data = await getAllTrainsService({ fastify, paginateData });
+  const rows = await getAllTrainsService({ fastify, paginateData });
 
-  return reply.code(OK).send(data);
+  reply.header('x-total-count', rows.total);
+  reply.header('Access-Control-Expose-Headers', 'x-total-count');
+  return reply.code(OK).send(rows.data);
 };
 
 module.exports = getAllTrains;

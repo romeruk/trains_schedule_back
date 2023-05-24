@@ -6,11 +6,12 @@ const { getTrainStations: getTrainStationsService } = require('../services');
 const errors = require('../../../errors/domain/errors');
 
 const getTrainStations = fastify => async (request, reply) => {
-  const { trainId } = request.params;
+  const { trainId, routeId } = request.params;
 
   const train = await getTrainStationsService({
     fastify,
-    trainId
+    trainId,
+    routeId
   });
 
   if (!train) {

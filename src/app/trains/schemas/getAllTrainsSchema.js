@@ -3,49 +3,32 @@
 const { headers, errorSchemas } = require('../../common/schema');
 
 const getAllTrainsResponseSchema = {
-  type: 'object',
-  properties: {
-    data: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          train_id: {
-            type: 'string',
-            format: 'uuid'
-          },
-          train_no: {
-            type: 'string'
-          },
-          route_id: {
-            type: 'string',
-            format: 'uuid'
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time'
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time'
-          }
-        }
-      }
-    },
-    meta: {
-      type: 'object',
-      properties: {
-        pagination: {
-          type: 'object',
-          properties: {
-            total: { type: 'number' },
-            page: { type: 'number' },
-            page_size: { type: 'number' },
-            total_pages: { type: 'number' }
-          }
-        }
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      train_id: {
+        type: 'string',
+        format: 'uuid'
       },
-      additionalProperties: true
+      train_no: {
+        type: 'string'
+      },
+      route_title: {
+        type: 'string'
+      },
+      route_id: {
+        type: 'string',
+        format: 'uuid'
+      },
+      created_at: {
+        type: 'string',
+        format: 'date-time'
+      },
+      updated_at: {
+        type: 'string',
+        format: 'date-time'
+      }
     }
   }
 };
@@ -60,8 +43,8 @@ const getAllTrainsRequestSchema = {
     type: 'object',
     required: [],
     properties: {
-      currentPage: { type: 'number', minimum: 1 },
-      pageSize: { type: 'number', minimum: 1 }
+      _start: { type: 'number', minimum: 0 },
+      _end: { type: 'number', minimum: 1 }
     }
   }
 };

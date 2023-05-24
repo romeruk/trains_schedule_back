@@ -23,7 +23,7 @@ function TrainRepo(fastify) {
 
   const getTrainStations =
     knex =>
-    async ({ trainId }) => {
+    async ({ trainId, routeId }) => {
       const query = knex
         .select(
           't.train_no',
@@ -37,7 +37,8 @@ function TrainRepo(fastify) {
         .leftJoin({ r: 'route' }, 'r.route_id', '=', 't.route_id')
         .leftJoin({ sh: 'schedule' }, 'sh.train_id', '=', 't.train_id')
         .leftJoin({ st: 'station' }, 'st.station_id', '=', 'sh.station_id')
-        .where('t.train_id', '=', trainId);
+        .where('t.train_id', '=', trainId)
+        .andWhere('r.route_id', '=', routeId);
 
       const rows = await query;
 
@@ -65,7 +66,11 @@ function TrainRepo(fastify) {
   const getAllTrains =
     knex =>
     async ({ paginateData }) => {
-      const query = knex('train').select().paginate(paginateData);
+      const query = knex()
+        .select()
+        .from({ t: 'train' })
+        .leftJoin({ r: 'route' }, 't.route_id', '=', 'r.route_id')
+        .paginate(paginateData);
       const rows = await query;
 
       return rows;
@@ -86,11 +91,6 @@ function TrainRepo(fastify) {
 
       return rows;
     };
-
-  // 		left join schedule shd on t.train_id = shd.train_id
-  // left join schedule shd2 on t.train_id = shd2.train_id
-  // where shd.station_id = 'fa5abd56-6ba9-4690-a8d0-bd182a7f31ed' and shd2.station_id = '3c929e75-e7ac-43c0-9af6-2d7a8b1e71f0'
-  // and shd.departure_time >= current_timestamp
 
   const getBoardData =
     knex =>

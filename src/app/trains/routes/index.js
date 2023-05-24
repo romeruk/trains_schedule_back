@@ -40,7 +40,7 @@ module.exports = async fastify => {
       handler: deleteTrain(fastify)
     }),
     fastify.route({
-      method: 'PUT',
+      method: 'PATCH',
       url: '/:trainId',
       schema: updateTrainSchema,
       handler: updateTrain(fastify)
@@ -53,7 +53,7 @@ module.exports = async fastify => {
     }),
     fastify.route({
       method: 'GET',
-      url: '/:trainId/schedule',
+      url: '/:trainId/route/:routeId/schedule',
       schema: getTrainStationsSchema,
       handler: getTrainStations(fastify)
     }),

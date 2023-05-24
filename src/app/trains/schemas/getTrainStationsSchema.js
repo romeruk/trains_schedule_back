@@ -3,32 +3,24 @@
 const { headers, errorSchemas } = require('../../common/schema');
 
 const getTrainStationsResponseSchema = {
-  type: 'object',
-  properties: {
-    train_no: {
-      type: 'string'
-    },
-    stations: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          station_title: {
-            type: 'string'
-          },
-          arrival_time: {
-            type: 'string',
-            format: 'date-time'
-          },
-          departure_time: {
-            type: 'string',
-            format: 'date-time'
-          },
-          station_id: {
-            type: 'string',
-            format: 'uuid'
-          }
-        }
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      station_title: {
+        type: 'string'
+      },
+      arrival_time: {
+        type: 'string',
+        format: 'date-time'
+      },
+      departure_time: {
+        type: 'string',
+        format: 'date-time'
+      },
+      station_id: {
+        type: 'string',
+        format: 'uuid'
       }
     }
   }
@@ -44,7 +36,8 @@ const getTrainStationsRequestSchema = {
     type: 'object',
     required: ['trainId'],
     properties: {
-      trainId: { type: 'string', format: 'uuid' }
+      trainId: { type: 'string', format: 'uuid' },
+      routeId: { type: 'string', format: 'uuid' }
     }
   }
 };

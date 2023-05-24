@@ -2,30 +2,15 @@
 
 const { headers, errorSchemas } = require('../../common/schema');
 
-// const createTrainResponseSchema = {
-//   type: 'object',
-//   properties: {
-//     train_id: {
-//       type: 'string',
-//       format: 'uuid'
-//     },
-//     train_no: {
-//       type: 'string'
-//     },
-//     route_id: {
-//       type: 'string',
-//       format: 'uuid'
-//     },
-//     created_at: {
-//       type: 'string',
-//       format: 'date-time'
-//     },
-//     updated_at: {
-//       type: 'string',
-//       format: 'date-time'
-//     }
-//   }
-// };
+const createTrainResponseSchema = {
+  type: 'object',
+  properties: {
+    train_id: {
+      type: 'string',
+      format: 'uuid'
+    }
+  }
+};
 
 const createTrainScheduleRequestSchema = {
   tags: ['Trains'],
@@ -44,12 +29,12 @@ const createTrainScheduleRequestSchema = {
           required: ['station_id', 'schedule_order'],
           properties: {
             station_id: { type: 'string', format: 'uuid' },
-            schedule_order: { type: 'number', minimum: 1 },
-            departure_time: { type: 'string', format: 'date-time' },
-            arrival_time: { type: 'string', format: 'date-time' }
+            schedule_order: { type: 'number', minimum: 1 }
+            // departure_time: { type: 'string', format: 'date-time' },
+            // arrival_time: { type: 'string', format: 'date-time' }
           }
-        },
-        minItems: 2
+        }
+        // minItems: 2
       }
     }
   }
@@ -58,7 +43,7 @@ const createTrainScheduleRequestSchema = {
 const createTrainScheduleSchema = {
   ...createTrainScheduleRequestSchema,
   response: {
-    // 200: createTrainResponseSchema,
+    200: createTrainResponseSchema,
     ...errorSchemas
   }
 };
