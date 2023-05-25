@@ -34,24 +34,18 @@ function BoardRepo(fastify) {
         .leftJoin({ st: 'station' }, 'sh.station_id', '=', 'st.station_id')
         .leftJoin({ st2: 'station' }, 'sh2.station_id', '=', 'st2.station_id');
 
-      if (departureStation && arrivalStation) {
+      if (departureStation && arrivalStation && departureDate) {
         query
           .leftJoin({ shd: 'schedule' }, 't.train_id', '=', 'shd.train_id')
           .leftJoin({ shd2: 'schedule' }, 't.train_id', '=', 'shd2.train_id')
           .where('shd.station_id', '=', departureStation)
-          .andWhere('shd2.station_id', '=', arrivalStation);
-
-        if (departureDate) {
-          query.where('shd.departure_time', '>=', departureDate);
-        } else {
-          query.whereRaw('shd.departure_time >= current_timestamp');
-        }
+          .andWhere('shd2.station_id', '=', arrivalStation)
+          .andwhereRaw(`sh.departure_time::timestamp::date = '${departureDate}'`);
       } else {
         query.whereRaw(
           "sh.departure_time >= current_timestamp and sh.departure_time < (date_trunc('day', current_timestamp) + interval '1 day' - interval '1 second')"
         );
       }
-
       const rows = await query;
 
       return rows;

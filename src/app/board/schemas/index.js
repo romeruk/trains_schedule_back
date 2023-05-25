@@ -1,6 +1,6 @@
 'use strict';
 
-const getBoardDataSchema = require('./getBoardDataSchema');
+const { getBoardDataSchema } = require('./getBoardDataSchema');
 
 module.exports = {
   getBoardDataSchema

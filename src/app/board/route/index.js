@@ -7,7 +7,7 @@ module.exports = async fastify => {
   fastify.route({
     method: 'GET',
     url: '/',
-    // schema: getBoardDataSchema,
+    schema: getBoardDataSchema,
     handler: getBoardData(fastify)
   });
 };
