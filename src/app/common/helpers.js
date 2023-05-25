@@ -15,40 +15,45 @@ function isCorrectOrder(numbers) {
 }
 
 function isCorrectScheduleTimes(scheduleArray) {
-  if (!Array.isArray(scheduleArray) || scheduleArray.length < 2) {
-    return false;
-  }
-
   let correctSchedule = true;
   const lastItemIndex = scheduleArray.length - 1;
 
-  for (let i = 0; i < lastItemIndex; i++) {
-    const indexNextItem = i + 1;
-    const current = scheduleArray[i];
-    const next = scheduleArray[indexNextItem];
+  if (scheduleArray.length === 1) {
+    const current = scheduleArray[0];
 
-    if (
-      (i !== 0 || i !== lastItemIndex) &&
-      new Date(current.arrival_time) >= new Date(current.departure_time)
-    ) {
+    if (new Date(current.arrival_time) >= new Date(current.departure_time)) {
       correctSchedule = false;
-      break;
     }
+  } else {
+    for (let i = 0; i < lastItemIndex; i++) {
+      const indexNextItem = i + 1;
+      const current = scheduleArray[i];
+      const next = scheduleArray[indexNextItem];
 
-    if (
-      indexNextItem === lastItemIndex &&
-      new Date(next.arrival_time) <= new Date(current.departure_time)
-    ) {
-      correctSchedule = false;
-      break;
-    }
+      if (new Date(next.arrival_time) >= new Date(next.departure_time)) {
+        correctSchedule = false;
+        break;
+      }
 
-    if (
-      indexNextItem !== lastItemIndex &&
-      new Date(next.arrival_time) <= new Date(current.departure_time)
-    ) {
-      correctSchedule = false;
-      break;
+      if (new Date(next.arrival_time) <= new Date(current.departure_time)) {
+        correctSchedule = false;
+        break;
+      }
+      // if (
+      //   (i !== 0 || i !== lastItemIndex) &&
+      //   new Date(current.arrival_time) >= new Date(current.departure_time)
+      // ) {
+      //   correctSchedule = false;
+      //   break;
+      // }
+
+      // if (
+      //   indexNextItem !== lastItemIndex &&
+      //   new Date(next.arrival_time) <= new Date(current.departure_time)
+      // ) {
+      //   correctSchedule = false;
+      //   break;
+      // }
     }
   }
 

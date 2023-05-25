@@ -26,19 +26,17 @@ function TrainRepo(fastify) {
     async ({ trainId, routeId }) => {
       const query = knex
         .select(
-          't.train_no',
-          'r.route_title',
           'sh.departure_time',
           'sh.arrival_time',
           'st.station_title',
-          'sh.station_id'
+          'sh.station_id',
+          'sh.schedule_order'
         )
-        .from({ t: 'train' })
-        .leftJoin({ r: 'route' }, 'r.route_id', '=', 't.route_id')
-        .leftJoin({ sh: 'schedule' }, 'sh.train_id', '=', 't.train_id')
-        .leftJoin({ st: 'station' }, 'st.station_id', '=', 'sh.station_id')
-        .where('t.train_id', '=', trainId)
-        .andWhere('r.route_id', '=', routeId);
+        .from({ sh: 'schedule' })
+        .leftJoin({ st: 'station' }, 'sh.station_id', '=', 'st.station_id')
+        .where('sh.train_id', '=', trainId)
+        .andWhere('sh.route_id', '=', routeId)
+        .orderBy('sh.schedule_order', 'asc');
 
       const rows = await query;
 
@@ -90,6 +88,47 @@ function TrainRepo(fastify) {
       });
 
       return rows;
+    };
+
+  const deleteSingleSchedule =
+    knex =>
+    async ({ trainId, routeId, stationId }) => {
+      const query = knex('schedule')
+        .where('train_id', '=', trainId)
+        .andWhere('route_id', '=', routeId)
+        .andWhere('station_id', '=', stationId)
+        .del()
+        .returning('*');
+
+      const [response] = await query;
+
+      return response;
+    };
+
+  const getLastScheduleRecord =
+    knex =>
+    async ({ trainId, routeId }) => {
+      const query = knex
+        .select()
+        .from('schedule')
+        .where('train_id', '=', trainId)
+        .andWhere('route_id', '=', routeId)
+        .orderBy('schedule_order', 'desc')
+        .limit(1);
+
+      const [response] = await query;
+
+      return response;
+    };
+
+  const createSingleSchedule =
+    knex =>
+    async ({ body }) => {
+      const query = knex('schedule').insert(body).returning('*');
+
+      const [response] = await query;
+
+      return response;
     };
 
   const getBoardData =
@@ -155,6 +194,9 @@ function TrainRepo(fastify) {
     deleteTrain,
     updateTrain,
     getAllTrains,
+    deleteSingleSchedule,
+    getLastScheduleRecord,
+    createSingleSchedule,
     createTrainSchedule,
     getBoardData
   };

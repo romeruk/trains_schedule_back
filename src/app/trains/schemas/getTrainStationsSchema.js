@@ -18,6 +18,9 @@ const getTrainStationsResponseSchema = {
         type: 'string',
         format: 'date-time'
       },
+      schedule_order: {
+        type: 'number'
+      },
       station_id: {
         type: 'string',
         format: 'uuid'

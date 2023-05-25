@@ -6,7 +6,8 @@ const { deleteTrainSchema } = require('./deleteTrainSchema');
 const { updateTrainSchema } = require('./updateTrainSchema');
 const { getAllTrainsSchema } = require('./getAllTrainsSchema');
 const { createTrainScheduleSchema } = require('./createTrainScheduleSchema');
-const { getBoardDataSchema } = require('./getBoardDataSchema');
+const { deleteSingleScheduleSchema } = require('./deleteSingleScheduleSchema');
+const { createSingleScheduleSchema } = require('./createSingleScheduleSchema');
 
 module.exports = {
   createTrainSchema,
@@ -15,5 +16,6 @@ module.exports = {
   updateTrainSchema,
   getAllTrainsSchema,
   createTrainScheduleSchema,
-  getBoardDataSchema
+  deleteSingleScheduleSchema,
+  createSingleScheduleSchema
 };

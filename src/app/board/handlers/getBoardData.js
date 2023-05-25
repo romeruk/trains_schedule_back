@@ -14,7 +14,7 @@ const getBoardData = fastify => async (request, reply) => {
     departureDate
   });
 
-  return reply.code(OK).send({ data });
+  return reply.code(OK).send(data);
 };
 
 module.exports = getBoardData;

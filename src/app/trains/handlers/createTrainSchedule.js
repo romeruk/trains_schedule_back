@@ -13,19 +13,19 @@ const createTrainSchedule = fastify => async (request, reply) => {
     return a.schedule_order - b.schedule_order;
   });
 
-  const orderArray = sortedSchedule.map(s => s.schedule_order);
+  // const orderArray = sortedSchedule.map(s => s.schedule_order);
 
-  const correctOrder = isCorrectOrder(orderArray);
+  // const correctOrder = isCorrectOrder(orderArray);
 
-  if (!correctOrder) {
-    return errors.InvalidScheduleOrder();
-  }
+  // if (!correctOrder) {
+  //   return errors.InvalidScheduleOrder();
+  // }
 
-  const correctScheduleTimes = isCorrectScheduleTimes(sortedSchedule);
+  // const correctScheduleTimes = isCorrectScheduleTimes(sortedSchedule);
 
-  if (!correctScheduleTimes) {
-    return errors.InvalidScheduleTime();
-  }
+  // if (!correctScheduleTimes) {
+  //   return errors.InvalidScheduleTime();
+  // }
 
   const body = sortedSchedule.map(sh => ({ train_id: trainId, route_id: routeId, ...sh }));
 

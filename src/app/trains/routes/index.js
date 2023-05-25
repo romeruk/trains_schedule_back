@@ -7,8 +7,10 @@ const {
   getAllTrainsSchema,
   updateTrainSchema,
   createTrainScheduleSchema,
-  getBoardDataSchema
+  deleteSingleScheduleSchema,
+  createSingleScheduleSchema
 } = require('../schemas/index');
+
 const {
   createTrain,
   getTrain,
@@ -17,7 +19,8 @@ const {
   updateTrain,
   getAllTrains,
   createTrainSchedule,
-  getBoardData
+  createSingleSchedule,
+  deleteSingleSchedule
 } = require('../handlers');
 
 module.exports = async fastify => {
@@ -58,15 +61,21 @@ module.exports = async fastify => {
       handler: getTrainStations(fastify)
     }),
     fastify.route({
+      method: 'POST',
+      url: '/:trainId/route/:routeId/schedule',
+      schema: createSingleScheduleSchema,
+      handler: createSingleSchedule(fastify)
+    }),
+    fastify.route({
+      method: 'DELETE',
+      url: '/:trainId/route/:routeId/station/:stationId',
+      schema: deleteSingleScheduleSchema,
+      handler: deleteSingleSchedule(fastify)
+    }),
+    fastify.route({
       method: 'PUT',
       url: '/:trainId/route/:routeId/schedule',
       schema: createTrainScheduleSchema,
       handler: createTrainSchedule(fastify)
-    }),
-    fastify.route({
-      method: 'GET',
-      url: '/board',
-      schema: getBoardDataSchema,
-      handler: getBoardData(fastify)
     });
 };

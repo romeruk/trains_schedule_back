@@ -7,7 +7,9 @@ const updateTrain = require('./updateTrain');
 const getAllTrains = require('./getAllTrains');
 const createTrainSchedule = require('./createTrainSchedule');
 const getTrain = require('./getTrain');
-const getBoardData = require('./getBoardData');
+const deleteSingleSchedule = require('./deleteSingleSchedule');
+const createSingleSchedule = require('./createSingleSchedule');
+const getLastScheduleRecord = require('./getLastScheduleRecord');
 
 module.exports = {
   createTrain,
@@ -16,6 +18,8 @@ module.exports = {
   deleteTrain,
   updateTrain,
   getAllTrains,
+  deleteSingleSchedule,
+  createSingleSchedule,
   createTrainSchedule,
-  getBoardData
+  getLastScheduleRecord
 };
